@@ -22,6 +22,7 @@ modulCss.bodyNav = css({
   borderRadius: "0px 0px 20px 20px",
   position: "fixed",
   top: 0,
+  zIndex: 1080,
 });
 
 modulCss.logoText = css({

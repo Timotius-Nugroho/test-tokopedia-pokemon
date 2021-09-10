@@ -10,7 +10,9 @@ const NavBar = (props) => {
       <Row>
         <Col sm={6}>
           <h2 css={styles.title}>Catch POKEmon</h2>
-          <h6 css={styles.semiTitle}>pokemon for live !</h6>
+          <h6 css={styles.semiTitle}>
+            <code>pokemon for live !</code>
+          </h6>
         </Col>
         <Col className="text-end" sm={6}>
           <img
