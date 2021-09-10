@@ -12,7 +12,9 @@ this.addEventListener("install", (event) => {
         "/icon.png",
         "/pokeBanner.jpeg",
         "/samplePoke.png",
-        "index.html",
+        "/index.html",
+        "/logo192.png",
+        "/logo512.png",
         "/",
         "/users",
       ]);
@@ -23,13 +25,18 @@ this.addEventListener("install", (event) => {
 this.addEventListener("fetch", (event) => {
   if (!navigator.onLine) {
     event.respondWith(
-      caches.match(event.request).then((res) => {
-        if (res) {
-          return res;
-        }
-        let requestUrl = event.request.clone();
-        fetch(requestUrl);
-      })
+      caches
+        .match(event.request)
+        .then((res) => {
+          if (res) {
+            return res;
+          }
+          let requestUrl = event.request.clone();
+          fetch(requestUrl);
+        })
+        .catch((err) => {
+          console.log("ERR" + err);
+        })
     );
   }
 });
