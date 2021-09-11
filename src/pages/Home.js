@@ -5,7 +5,11 @@ import { Card, Button, Container, Row, Col, Pagination } from "react-bootstrap";
 
 const arr = [1, 2, 3, 4, 6, 7];
 
-const Home = () => {
+const Home = (props) => {
+  const moveToDetail = (name) => {
+    props.history.push(`/detail?name=${name}`);
+  };
+
   return (
     <>
       <img
@@ -30,7 +34,12 @@ const Home = () => {
                     <Card.Title>
                       <code>Name</code>
                     </Card.Title>
-                    <Button css={styles.buttonDetail}>
+                    <Button
+                      css={styles.buttonDetail}
+                      onClick={() => {
+                        moveToDetail(item);
+                      }}
+                    >
                       <code>Go To Details</code>
                     </Button>
                   </Card.Body>

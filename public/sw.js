@@ -21,6 +21,7 @@ this.addEventListener("install", (event) => {
         "/logo512.png",
         "/",
         "/users",
+        "/detail",
       ]);
     })
   );

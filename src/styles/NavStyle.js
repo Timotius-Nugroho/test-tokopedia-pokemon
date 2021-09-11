@@ -5,6 +5,7 @@ const modulCss = {};
 modulCss.title = css({
   fontWeight: "bolder",
   color: "#ebe134",
+  cursor: "pointer",
 });
 
 modulCss.semiTitle = css({
@@ -22,7 +23,7 @@ modulCss.bodyNav = css({
   borderRadius: "0px 0px 20px 20px",
   position: "fixed",
   top: 0,
-  zIndex: 1080,
+  zIndex: 1050,
 });
 
 modulCss.logoText = css({
