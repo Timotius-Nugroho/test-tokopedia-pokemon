@@ -61,6 +61,7 @@ const Detail = (props) => {
             {modalInfo[1] ? (
               <div>
                 <h2>This pokemon is yours !!!</h2>
+                <br />
                 <Form.Control type="text" placeholder="Give him a name" />
               </div>
             ) : (

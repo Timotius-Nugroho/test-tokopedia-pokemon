@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
 /** @jsxImportSource @emotion/react */
 import styles from "../styles/HomeStyle";
@@ -96,24 +97,26 @@ const Home = (props) => {
           })}
         </Row>
       </Container>
-      <div className="overflow-auto">
-        <Pagination css={styles.pagination} size="sm">
-          <Pagination.Prev onClick={prevPage} />
-          {pageInfo.pageList.map((e, i) => {
-            return (
-              <Pagination.Item
-                key={i}
-                active={e === pageInfo.currPage}
-                onClick={() => {
-                  setPageInfo({ ...pageInfo, currPage: e });
-                }}
-              >
-                {e}
-              </Pagination.Item>
-            );
-          })}
-          <Pagination.Next onClick={nextPage} />
-        </Pagination>
+
+      <Pagination css={styles.pagination} size="sm">
+        <Pagination.Prev onClick={prevPage} />
+        {pageInfo.pageList.map((e, i) => {
+          return (
+            <Pagination.Item
+              key={i}
+              active={e === pageInfo.currPage}
+              onClick={() => {
+                setPageInfo({ ...pageInfo, currPage: e });
+              }}
+            >
+              {e}
+            </Pagination.Item>
+          );
+        })}
+        <Pagination.Next onClick={nextPage} />
+      </Pagination>
+      <div css={styles.totalPage}>
+        <code>of {pageInfo.totalPage} pages</code>
       </div>
     </>
   );

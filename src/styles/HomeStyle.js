@@ -35,8 +35,13 @@ modulCss.buttonDetail = css({
 
 modulCss.pagination = css({
   justifyContent: "center",
-  marginBottom: "40px",
   width: "100%",
+});
+
+modulCss.totalPage = css({
+  textAlign: "center",
+  marginBottom: 40,
+  marginTop: "-15px",
 });
 
 export default modulCss;
