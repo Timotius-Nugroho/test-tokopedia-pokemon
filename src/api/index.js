@@ -45,8 +45,9 @@ export const getAllPokemon = async (limit, offset) => {
   })
     .then((res) => res.json())
     .then((res) => res.data.pokemons)
-    .catch((err) => {});
-
+    .catch((err) => {
+      return "err";
+    });
   return dataFromServer;
 };
 

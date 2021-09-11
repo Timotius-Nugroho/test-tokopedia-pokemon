@@ -15,13 +15,13 @@ this.addEventListener("install", (event) => {
         "/manifest.json",
         "/icon.png",
         "/pokeBanner.jpeg",
-        "/samplePoke.png",
         "/index.html",
         "/logo192.png",
         "/logo512.png",
         "/",
         "/users",
         "/detail",
+        "/my-poke",
       ]);
     })
   );

@@ -48,8 +48,14 @@ const Home = (props) => {
   useEffect(() => {
     const { limit } = pageInfo;
     getAllPokemon(limit, 0).then((res) => {
-      setPageInfo({ ...pageInfo, totalPage: Math.ceil(res.count / limit) });
-      setData(res.results);
+      if (res === "err") {
+        const dataCache = JSON.parse(localStorage.getItem("allpoke"));
+        setData(dataCache);
+      } else {
+        setData(res.results);
+        setPageInfo({ ...pageInfo, totalPage: Math.ceil(res.count / limit) });
+        localStorage.setItem("allpoke", JSON.stringify(res.results));
+      }
     });
   }, []);
 
@@ -57,7 +63,13 @@ const Home = (props) => {
     const { limit, currPage } = pageInfo;
     const offset = currPage * limit - limit;
     getAllPokemon(limit, offset).then((res) => {
-      setData(res.results);
+      if (res === "err") {
+        const dataCache = JSON.parse(localStorage.getItem("allpoke"));
+        setData(dataCache);
+      } else {
+        setData(res.results);
+        localStorage.setItem("allpoke", JSON.stringify(res.results));
+      }
     });
   }, [pageInfo]);
 
@@ -73,28 +85,34 @@ const Home = (props) => {
       </h1>
       <Container>
         <Row>
-          {data.map((item, index) => {
-            return (
-              <Col sm={6} md={4} lg={3} key={index}>
-                <Card css={styles.card}>
-                  <Card.Img variant="top" src={item.image} />
-                  <Card.Body>
-                    <Card.Title>
-                      <code>{item.name}</code>
-                    </Card.Title>
-                    <Button
-                      css={styles.buttonDetail}
-                      onClick={() => {
-                        moveToDetail(item.name, item.artwork);
-                      }}
-                    >
-                      <code>Go To Details</code>
-                    </Button>
-                  </Card.Body>
-                </Card>
-              </Col>
-            );
-          })}
+          {data
+            ? data.map((item, index) => {
+                return (
+                  <Col sm={6} md={4} lg={3} key={index}>
+                    <Card css={styles.card}>
+                      <Card.Img
+                        variant="top"
+                        src={item.image}
+                        alt="poke-images"
+                      />
+                      <Card.Body>
+                        <Card.Title>
+                          <code>{item.name}</code>
+                        </Card.Title>
+                        <Button
+                          css={styles.buttonDetail}
+                          onClick={() => {
+                            moveToDetail(item.name, item.artwork);
+                          }}
+                        >
+                          <code>Go To Details</code>
+                        </Button>
+                      </Card.Body>
+                    </Card>
+                  </Col>
+                );
+              })
+            : ""}
         </Row>
       </Container>
 
