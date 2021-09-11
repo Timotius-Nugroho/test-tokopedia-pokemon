@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 import React, { useState, useEffect } from "react";
 import {
   Container,
@@ -11,6 +12,7 @@ import {
 /** @jsxImportSource @emotion/react */
 import styles from "../styles/DetailStyle";
 import { getPokemon } from "../api/index";
+import { RootContext } from "../App";
 
 const Detail = (props) => {
   const query = new URLSearchParams(props.location.search);
@@ -21,11 +23,12 @@ const Detail = (props) => {
   const [types, setTypes] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [modalInfo, setModalInfo] = useState([false, false]);
+  const [newName, setNewName] = useState("");
 
   const catchPoke = async () => {
     setIsLoading(true);
     const prob = Math.floor(Math.random() * 10);
-    await new Promise((resolve) => setTimeout(resolve, 3000));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
     setIsLoading(false);
     console.log(prob);
     if (prob > 5) {
@@ -62,7 +65,13 @@ const Detail = (props) => {
               <div>
                 <h2>This pokemon is yours !!!</h2>
                 <br />
-                <Form.Control type="text" placeholder="Give him a name" />
+                <Form.Control
+                  type="text"
+                  placeholder="Give him a name"
+                  onChange={(event) => {
+                    setNewName(event.target.value);
+                  }}
+                />
               </div>
             ) : (
               <h1>Opss!!!, please try again...</h1>
@@ -70,14 +79,33 @@ const Detail = (props) => {
           </Modal.Body>
 
           <Modal.Footer>
-            <Button
-              variant="warning"
-              onClick={() => {
-                setModalInfo([false, false]);
+            <RootContext.Consumer>
+              {(value) => {
+                const { dispatch, state } = value;
+                const listName = state.myPokeList.map((e) => e.name);
+                const pokeData = {
+                  name: newName,
+                  artwork,
+                };
+                return listName.includes(newName) ? (
+                  <Button variant="warning" disabled>
+                    Pokemon name already exists
+                  </Button>
+                ) : (
+                  <Button
+                    variant="warning"
+                    onClick={() => {
+                      setModalInfo([false, false]);
+                      modalInfo[1]
+                        ? dispatch({ type: "ADD_POKE", data: pokeData })
+                        : "";
+                    }}
+                  >
+                    {modalInfo[1] ? "Save" : "OK"}
+                  </Button>
+                );
               }}
-            >
-              {modalInfo[1] ? "Save" : "OK"}
-            </Button>
+            </RootContext.Consumer>
           </Modal.Footer>
         </Modal>
 

@@ -2,6 +2,7 @@ import React from "react";
 import { Container, Row, Col, Button, Card } from "react-bootstrap";
 /** @jsxImportSource @emotion/react */
 import styles from "../styles/MyPokeStyle";
+import { RootContext } from "../App";
 
 const arr = [];
 
@@ -40,6 +41,13 @@ const MyPoke = () => {
             </h3>
           )}
         </Row>
+        <RootContext.Consumer>
+          {(value) => {
+            const { state } = value;
+            console.log("INIBOSS", state.myPokeList);
+            return <div>AAAAAA</div>;
+          }}
+        </RootContext.Consumer>
       </Container>
     </>
   );
