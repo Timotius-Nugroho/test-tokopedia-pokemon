@@ -20,7 +20,7 @@ const NavBar = (props) => {
               moveTo("/");
             }}
           >
-            Catch POKEmon
+            Catch Pokemon
           </h2>
           <h6 css={styles.semiTitle}>
             <code>pokemon for live !</code>

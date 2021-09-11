@@ -23,6 +23,7 @@ modulCss.card = css({
   margin: "auto",
   textAlign: "center",
   marginBottom: 30,
+  cursor: "pointer",
 });
 
 modulCss.buttonRelesae = css({

@@ -39,15 +39,18 @@ const Detail = (props) => {
   };
 
   useEffect(() => {
-    getPokemon("charmander")
-      .then((res) => {
-        setAbilities(res.abilities);
-        setMoves(res.moves);
-        setTypes(res.types);
-      })
-      .catch((err) => {
-        console.log(err.response);
-      });
+    getPokemon("charmander").then((res) => {
+      let result = {};
+      if (res === "err") {
+        result = JSON.parse(localStorage.getItem("detailpoke"));
+      } else {
+        result = res;
+        localStorage.setItem("detailpoke", JSON.stringify(res));
+      }
+      setAbilities(result.abilities);
+      setMoves(result.moves);
+      setTypes(result.types);
+    });
   }, []);
 
   return (
@@ -67,7 +70,7 @@ const Detail = (props) => {
                 <br />
                 <Form.Control
                   type="text"
-                  placeholder="Give him a name"
+                  placeholder={`Give him a name (default = ${name})`}
                   onChange={(event) => {
                     setNewName(event.target.value);
                   }}
@@ -84,10 +87,10 @@ const Detail = (props) => {
                 const { dispatch, state } = value;
                 const listName = state.myPokeList.map((e) => e.name);
                 const pokeData = {
-                  name: newName,
+                  name: newName ? newName : name,
                   artwork,
                 };
-                return listName.includes(newName) ? (
+                return listName.includes(pokeData.name) ? (
                   <Button variant="warning" disabled>
                     Pokemon name already exists
                   </Button>

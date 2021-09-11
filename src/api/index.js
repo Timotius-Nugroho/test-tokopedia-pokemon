@@ -65,7 +65,9 @@ export const getPokemon = async (name) => {
   })
     .then((res) => res.json())
     .then((res) => res.data.pokemon)
-    .catch((err) => {});
+    .catch((err) => {
+      return "err";
+    });
 
   return dataFromServer;
 };
