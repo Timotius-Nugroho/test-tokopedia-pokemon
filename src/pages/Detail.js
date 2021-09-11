@@ -10,9 +10,15 @@ import {
 } from "react-bootstrap";
 /** @jsxImportSource @emotion/react */
 import styles from "../styles/DetailStyle";
+import { getPokemon } from "../api/index";
 
 const Detail = (props) => {
-  const [data, setData] = useState({});
+  const query = new URLSearchParams(props.location.search);
+  const name = query.get("name");
+  const artwork = query.get("artwork");
+  const [abilities, setAbilities] = useState([]);
+  const [moves, setMoves] = useState([]);
+  const [types, setTypes] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [modalInfo, setModalInfo] = useState([false, false]);
 
@@ -21,12 +27,25 @@ const Detail = (props) => {
     const prob = Math.floor(Math.random() * 10);
     await new Promise((resolve) => setTimeout(resolve, 3000));
     setIsLoading(false);
+    console.log(prob);
     if (prob > 5) {
       setModalInfo([true, true]);
       return true;
     }
     setModalInfo([true, false]);
   };
+
+  useEffect(() => {
+    getPokemon("charmander")
+      .then((res) => {
+        setAbilities(res.abilities);
+        setMoves(res.moves);
+        setTypes(res.types);
+      })
+      .catch((err) => {
+        console.log(err.response);
+      });
+  }, []);
 
   return (
     <>
@@ -41,7 +60,7 @@ const Detail = (props) => {
           <Modal.Body css={styles.modal}>
             {modalInfo[1] ? (
               <div>
-                <h2>Succes get pokemon !!!</h2>
+                <h2>This pokemon is yours !!!</h2>
                 <Form.Control type="text" placeholder="Give him a name" />
               </div>
             ) : (
@@ -62,12 +81,8 @@ const Detail = (props) => {
         </Modal>
 
         <Row>
-          <Col sm={6}>
-            <img
-              src={`${process.env.PUBLIC_URL}/samplePoke.png`}
-              alt="poke-pic"
-              css={styles.pokeImg}
-            ></img>
+          <Col md={6}>
+            <img src={artwork} alt="poke-pic" css={styles.pokeImg}></img>
             <Button variant="danger" css={styles.btnCatch} onClick={catchPoke}>
               <code>
                 {isLoading ? (
@@ -87,21 +102,39 @@ const Detail = (props) => {
               </code>
             </Button>
           </Col>
-          <Col sm={6}>
+          <Col md={6}>
             <code>
-              <h1 css={styles.pokeName}>Name</h1>
+              <h1 css={styles.pokeName}>{name}</h1>
               <h3 css={styles.pokeAttr}>Moves`</h3>
-              <Button variant="warning" css={styles.attrName}>
-                Warning
-              </Button>
+              <div css={styles.containerAttr}>
+                {moves.map((item, index) => {
+                  return (
+                    <Button variant="warning" css={styles.attrName} key={index}>
+                      {item.move.name}
+                    </Button>
+                  );
+                })}
+              </div>
               <h3 css={styles.pokeAttr}>Types`</h3>
-              <Button variant="warning" css={styles.attrName}>
-                Warning
-              </Button>
+              <div css={styles.containerAttr}>
+                {types.map((item, index) => {
+                  return (
+                    <Button variant="warning" css={styles.attrName} key={index}>
+                      {item.type.name}
+                    </Button>
+                  );
+                })}
+              </div>
               <h3 css={styles.pokeAttr}>Abilities`</h3>
-              <Button variant="warning" css={styles.attrName}>
-                Warning
-              </Button>
+              <div css={styles.containerAttr}>
+                {abilities.map((item, index) => {
+                  return (
+                    <Button variant="warning" css={styles.attrName} key={index}>
+                      {item.ability.name}
+                    </Button>
+                  );
+                })}
+              </div>
             </code>
           </Col>
         </Row>

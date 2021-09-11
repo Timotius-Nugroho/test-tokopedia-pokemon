@@ -21,6 +21,12 @@ modulCss.pokeName = css({
   marginBottom: "50px",
 });
 
+modulCss.containerAttr = css({
+  maxHeight: "200px",
+  overflow: "auto",
+  borderRadius: "8px",
+});
+
 modulCss.pokeAttr = css({
   fontWeight: 600,
   marginBottom: "10px",
@@ -28,7 +34,7 @@ modulCss.pokeAttr = css({
 });
 
 modulCss.attrName = css({
-  fontSize: "small",
+  fontSize: "smaller",
   margin: "2px",
 });
 
