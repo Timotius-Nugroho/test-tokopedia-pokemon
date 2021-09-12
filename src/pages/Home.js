@@ -92,7 +92,8 @@ const Home = (props) => {
                     <Card css={styles.card}>
                       <Card.Img
                         variant="top"
-                        src={item.image}
+                        style={{ height: "200px", marginTop: "15px" }}
+                        src={item.dreamworld}
                         alt="poke-images"
                       />
                       <Card.Body>

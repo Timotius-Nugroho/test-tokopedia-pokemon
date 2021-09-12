@@ -4,7 +4,7 @@ const modulCss = {};
 
 modulCss.title = css({
   fontWeight: "bolder",
-  color: "#ebe134",
+  color: "#c79006",
   cursor: "pointer",
 });
 

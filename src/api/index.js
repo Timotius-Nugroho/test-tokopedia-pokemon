@@ -4,7 +4,7 @@ const GET_ALL_POKEMONS = `query pokemons($limit: Int, $offset: Int) {
     results {
       id
       name
-      image
+      dreamworld
       artwork
     }
   }
