@@ -70,11 +70,12 @@ const Detail = (props) => {
                 <br />
                 <Form.Control
                   type="text"
-                  placeholder={`Give him a name (default = ${name})`}
+                  placeholder={`Give him a name . . .`}
                   onChange={(event) => {
                     setNewName(event.target.value);
                   }}
                 />
+                <p css={styles.textInfo}>{`Default name is "${name}"`}</p>
               </div>
             ) : (
               <h1>Opss!!!, please try again...</h1>

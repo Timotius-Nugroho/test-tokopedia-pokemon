@@ -49,4 +49,12 @@ modulCss.modal = css({
   color: "black",
 });
 
+modulCss.textInfo = css({
+  color: "red",
+  fontSize: "10px",
+  fontStyle: "italic",
+  lineHeight: 2,
+  fontWeight: 600,
+});
+
 export default modulCss;
