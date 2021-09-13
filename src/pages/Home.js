@@ -117,7 +117,11 @@ const Home = (props) => {
         </Row>
       </Container>
 
-      <Pagination css={styles.pagination} size="sm">
+      <Pagination
+        css={styles.pagination}
+        size="sm"
+        data-testid="home-pagination"
+      >
         <Pagination.Prev onClick={prevPage} />
         {pageInfo.pageList.map((e, i) => {
           return (

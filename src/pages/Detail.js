@@ -62,6 +62,7 @@ const Detail = (props) => {
           onHide={() => {
             setModalInfo([false, false]);
           }}
+          data-testid="modal-catch"
         >
           <Modal.Body css={styles.modal}>
             {modalInfo[1] ? (
@@ -116,7 +117,12 @@ const Detail = (props) => {
         <Row>
           <Col md={6}>
             <img src={artwork} alt="poke-pic" css={styles.pokeImg}></img>
-            <Button variant="danger" css={styles.btnCatch} onClick={catchPoke}>
+            <Button
+              variant="danger"
+              css={styles.btnCatch}
+              onClick={catchPoke}
+              data-testid="detail-button-catch"
+            >
               <code>
                 {isLoading ? (
                   <div>

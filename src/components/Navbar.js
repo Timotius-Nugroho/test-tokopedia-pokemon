@@ -11,7 +11,7 @@ const NavBar = (props) => {
   };
 
   return (
-    <Container fluid css={styles.bodyNav}>
+    <Container fluid css={styles.bodyNav} data-testid="navbar-test">
       <Row>
         <Col>
           <h2
@@ -35,6 +35,7 @@ const NavBar = (props) => {
               onClick={() => {
                 moveTo("/my-poke");
               }}
+              data-testid="navbar-goto-my-poke"
             ></img>
             <span css={styles.logoText}>
               <code>`My POke`</code>

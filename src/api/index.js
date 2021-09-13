@@ -31,24 +31,29 @@ const GET_POKEMON = `query pokemon($name: String!) {
 }`;
 
 export const getAllPokemon = async (limit, offset) => {
-  const dataFromServer = await fetch("https://graphql-pokeapi.graphcdn.app/", {
-    credentials: "omit",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      query: GET_ALL_POKEMONS,
-      variables: {
-        limit,
-        offset,
-      },
-    }),
-    method: "POST",
-  })
-    .then((res) => res.json())
-    .then((res) => res.data.pokemons)
-    .catch((err) => {
-      return "err";
-    });
-  return dataFromServer;
+  try {
+    const dataFromServer = await fetch(
+      "https://graphql-pokeapi.graphcdn.app/",
+      {
+        credentials: "omit",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          query: GET_ALL_POKEMONS,
+          variables: {
+            limit,
+            offset,
+          },
+        }),
+        method: "POST",
+      }
+    );
+
+    const result = await dataFromServer.json();
+    return result.data.pokemons;
+  } catch (error) {
+    console.log(error);
+    return "err";
+  }
 };
 
 export const getPokemon = async (name) => {
