@@ -19,6 +19,22 @@ const Home = (props) => {
     props.history.push(`/detail?name=${name}&artwork=${artwork}`);
   };
 
+  const getData = async (limit, offset, afterRender) => {
+    try {
+      const res = await getAllPokemon(limit, offset);
+      // console.log("RESSS", res);
+      setData(res.results);
+      if (afterRender) {
+        setPageInfo({ ...pageInfo, totalPage: Math.ceil(res.count / limit) });
+      }
+      localStorage.setItem("allpoke", JSON.stringify(res.results));
+    } catch (error) {
+      // console.log("ERR", error);
+      const dataCache = JSON.parse(localStorage.getItem("allpoke"));
+      setData(dataCache);
+    }
+  };
+
   const nextPage = () => {
     const { currPage, totalPage, pageList, display } = pageInfo;
     if (currPage >= 1 && currPage < totalPage) {
@@ -47,30 +63,13 @@ const Home = (props) => {
 
   useEffect(() => {
     const { limit } = pageInfo;
-    getAllPokemon(limit, 0).then((res) => {
-      if (res === "err") {
-        const dataCache = JSON.parse(localStorage.getItem("allpoke"));
-        setData(dataCache);
-      } else {
-        setData(res.results);
-        setPageInfo({ ...pageInfo, totalPage: Math.ceil(res.count / limit) });
-        localStorage.setItem("allpoke", JSON.stringify(res.results));
-      }
-    });
+    getData(limit, 0, true);
   }, []);
 
   useEffect(() => {
     const { limit, currPage } = pageInfo;
     const offset = currPage * limit - limit;
-    getAllPokemon(limit, offset).then((res) => {
-      if (res === "err") {
-        const dataCache = JSON.parse(localStorage.getItem("allpoke"));
-        setData(dataCache);
-      } else {
-        setData(res.results);
-        localStorage.setItem("allpoke", JSON.stringify(res.results));
-      }
-    });
+    getData(limit, offset);
   }, [pageInfo]);
 
   return (
